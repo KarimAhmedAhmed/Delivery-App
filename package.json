@@ -22,5 +22,15 @@
     "ts-jest": "^29.1.1",
     "ts-mockito": "^2.6.1",
     "typescript": "^5.2.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "modulePaths": [
+      "<rootDir>/core/src/"
+    ]
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
