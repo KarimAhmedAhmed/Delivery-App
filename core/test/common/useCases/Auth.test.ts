@@ -1,7 +1,7 @@
 
 import { instance, mock, when } from 'ts-mockito';
 import { CustomerRepository } from '../../../src/common/domain/repositories/Customer';
-import { Auth } from '../../../src/common/domain/useCasees/Auth';
+import { Auth } from '../../../src/common/domain/useCases/Auth';
 import { TokenService } from '../../../src/common/domain/services/Token';
 import { PasswordService } from '../../../src/common/domain/services/Password';
 import { DriverRepository } from '../../../src/common/domain/repositories/Driver';
