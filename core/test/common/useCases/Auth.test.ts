@@ -1,43 +1,66 @@
 
 import { instance, mock, when } from 'ts-mockito';
-import { CustomerRepository } from '../../../src/common/domain/repositories/Customer';
+import { UserRepository } from '../../../src/common/domain/repositories/User';
 import { Auth } from '../../../src/common/domain/useCases/Auth';
 import { TokenService } from '../../../src/common/domain/services/Token';
 import { PasswordService } from '../../../src/common/domain/services/Password';
-import { DriverRepository } from '../../../src/common/domain/repositories/Driver';
 
 describe('auth', () => {
-  let customerRepository: CustomerRepository;
-  let driverRepository: DriverRepository;
+  let userRepository: UserRepository;
   let useCase: Auth;
   let tokenService: TokenService;
   let passwordService: PasswordService;
 
   beforeAll(() => {
-    customerRepository = mock<CustomerRepository>();
-    driverRepository = mock<DriverRepository>();
+    userRepository = mock<UserRepository>();
     tokenService = mock<TokenService>();
     passwordService = mock<PasswordService>();
 
-    useCase = new Auth(instance(customerRepository), instance(driverRepository), instance(passwordService), instance(tokenService));
+    useCase = new Auth(instance(userRepository), instance(passwordService), instance(tokenService));
   });
+
   it('should return access token for customer', () => {
-    when(customerRepository.findCustomerByUsername('karim')).thenResolve({
-      userName: 'karim',
+    when(userRepository.findCustomerByUsername('karim','Customer')).thenResolve({
+      username: 'karim',
       password: 'hash',
+      role: 'Customer'
     });
     when(passwordService.comparePassword('hash', '1234')).thenResolve(true);
     when(tokenService.createAccessToken('karim')).thenReturn('sdafjhgsdfkhj');
-    expect(useCase.customerLogin('karim', '1234')).resolves.toHaveProperty('accessToken');
+    expect(useCase.login('karim', '1234')).resolves.toHaveProperty('accessToken');
   });
 
   it('should return access token for driver', () => {
-    when(driverRepository.findDriverByUsername('karim')).thenResolve({
-      userName: 'karim',
+    when(userRepository.findDriverByUsername('karim','Driver')).thenResolve({
+      username: 'karim',
       password: 'hash',
+      role: 'Driver'
     });
     when(passwordService.comparePassword('hash', '1234')).thenResolve(true);
     when(tokenService.createAccessToken('karim')).thenReturn('sdafjhgsdfkhj');
-    expect(useCase.driverLogin('karim', '1234')).resolves.toHaveProperty('accessToken');
+    expect(useCase.login('karim', '1234')).resolves.toHaveProperty('accessToken');
+  });
+
+  //registration
+  it('should return access token for customer', () => {
+    when(userRepository.findCustomerByUsername('karim','Customer')).thenResolve({
+      username: 'karim',
+      password: 'hash',
+      role: 'Customer'
+    });
+    when(passwordService.comparePassword('hash', '1234')).thenResolve(true);
+    when(tokenService.createAccessToken('karim')).thenReturn('sdafjhgsdfkhj');
+    expect(useCase.register('karim', '1234')).resolves.toHaveProperty('accessToken');
+  });
+
+  it('should return access token for driver', () => {
+    when(userRepository.findDriverByUsername('karim','Driver')).thenResolve({
+      username: 'karim',
+      password: 'hash',
+      role: 'Driver'
+    });
+    when(passwordService.comparePassword('hash', '1234')).thenResolve(true);
+    when(tokenService.createAccessToken('karim')).thenReturn('sdafjhgsdfkhj');
+    expect(useCase.register('karim', '1234')).resolves.toHaveProperty('accessToken');
   });
 });
