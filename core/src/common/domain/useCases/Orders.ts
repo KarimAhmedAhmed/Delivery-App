@@ -51,9 +51,9 @@ export class Orders{
        const orderAcceptedByDriver =  await this.orderRepository.driverAccepted(driver,order);
        if(!orderAcceptedByDriver) throw new Error(); 
        //start the trip
-       const startTrip =  await this.orderRepository.startTrip();
+       const startTrip =  await this.orderRepository.startTrip(driver, order);
     
-       return; 
+       return startTrip; 
 
     }
 }
