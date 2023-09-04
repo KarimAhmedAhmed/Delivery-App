@@ -1,16 +1,15 @@
+import { Driver } from "../entities/Driver";
 import { Order } from "../entities/Order";
 import { CustomerRepository } from "../repositories/Customer";
 import { DriverRepository } from "../repositories/Driver";
 import { OrderRepository } from "../repositories/Order";
-import { TokenService } from "../services/Token";
 
 export class Orders{
 
     constructor(
         readonly customerRepository: CustomerRepository,
         readonly driverRepository: DriverRepository,
-        readonly orderRepository: OrderRepository,
-        readonly tokenService: TokenService,
+        readonly orderRepository: OrderRepository
       ) {}
 
     async makeAnOrder(username: string, items: string[], price:BigInteger, pickUpPoint: string, dropDownPoint: string){
@@ -23,17 +22,38 @@ export class Orders{
         return order;
     }
 
-    async assignToDriver(order: Order){
+    async sendOrderToDrivers(order: Order){
 
         const drivers = await this.driverRepository.findDriversByLocation(order.pickUpPoint);
         if(!drivers) throw new Error();
-        const setDriver = await this.orderRepository.setDriver(drivers,order);
-        if(!setDriver) throw new Error();
+        const setDrivers = await this.orderRepository.setDriver(drivers,order);
+        if(!setDrivers) throw new Error();
         
         
     }
+    async orderPending(order: Order, driver: Driver, price: BigInteger){
+        //the driver raised the order price
+        const raisePriceByDriver = await this.orderRepository.raisePriceByDriver(driver,order,price);
+        if(!raisePriceByDriver) throw new Error();
+        const updateOrder = await this.orderRepository.updateOrder(order,raisePriceByDriver);
+        if(!updateOrder) throw new Error();
+        const notifyTheCustomer = await this.orderRepository.notifyTheCustomer(order,driver);
+        if(!notifyTheCustomer) throw new Error();
 
-    async orderJourney(order: Order, ){
+        return notifyTheCustomer;
+
+    }
+    async orderAccepted(order: Order, driver: Driver){
+        //the customer accepted the driver
+        const driverAcceptedByCustomer =  await this.orderRepository.customerAccepted(driver,order);
+        if(!driverAcceptedByCustomer) throw new Error(); 
+        //the driver accepted the order
+       const orderAcceptedByDriver =  await this.orderRepository.driverAccepted(driver,order);
+       if(!orderAcceptedByDriver) throw new Error(); 
+       //start the trip
+       const startTrip =  await this.orderRepository.startTrip();
+    
+       return; 
 
     }
 }
