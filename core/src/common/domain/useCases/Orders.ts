@@ -45,17 +45,20 @@ import { User } from "../entities/User";
         //the customer accepted the driver
         const driverAcceptedByCustomer =  await this.orderRepository.customerAccepted(driver,order);
         if(!driverAcceptedByCustomer) throw new Error(); 
-        //the driver accepted the order
-       const orderAcceptedByDriver =  await this.orderRepository.driverAccepted(driver,order);
-       if(!orderAcceptedByDriver) throw new Error();
-       
-       let newOrder = new Order(order.customer, order.items, order.price, order.pickUpPoint, order.dropDownPoint, 'On-The-Way');
-       const updateOrder = await this.orderRepository.updateOrder(order, newOrder);
-       
-       if(!updateOrder) throw new Error();
-       //start the trip
-       const startTrip =  await this.orderRepository.startTrip(driver, order);
-    
+            //the driver accepted the order
+        const orderAcceptedByDriver =  await this.orderRepository.driverAccepted(driver,order);
+        if(!orderAcceptedByDriver) throw new Error();
+        
+        let newOrder = new Order(order.customer, order.items, order.price, order.pickUpPoint, order.dropDownPoint, 'On-The-Way');
+        const updateOrder = await this.orderRepository.updateOrder(order, newOrder);
+        
+        if(!updateOrder) throw new Error();
+        //start the trip
+        const startTrip =  await this.orderRepository.startTrip(driver, order);
+        
+        //TODO
+
+
        return startTrip; 
 
     }

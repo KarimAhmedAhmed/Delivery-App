@@ -16,7 +16,6 @@ class OrderRepository {
         return await this.collection.findOne({ _id: orderId });
     }
 
-    // Add more CRUD methods as needed
 }
 
 export default OrderRepository;
