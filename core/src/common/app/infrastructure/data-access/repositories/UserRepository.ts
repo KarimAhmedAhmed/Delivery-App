@@ -1,18 +1,24 @@
 import { Model } from 'mongoose';
-
+import UserModel from '../models/user.model';
 class UserRepository {
-    constructor(private readonly userModel: Model<User> ) {}
+    private readonly userModel = UserModel;
 
-    async createOrder(user: User): Promise<User> {
+
+
+    async createUser(user: User): Promise<User> {
         const newUser = new this.userModel(user);
         return await newUser.save();
     }
 
-    async getOrderById(userId: string): Promise<User | null> {
-        return await this.userModel.findById(userId).exec();
-    }
+    // async getUserById(userId: string): Promise<User> {
+    //     return await this.userModel.findById(userId).exec();
+    // }
 
  
 
 }
 export default UserRepository;
+
+
+
+  

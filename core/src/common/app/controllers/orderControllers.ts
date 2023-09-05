@@ -5,8 +5,9 @@ import {Orders} from '../../domain/useCases/Orders';
 
 let orders:Orders;
         
-export const createOrder= async (req: Request, res: Response) => {
+export const createOrder = async (req: Request, res: Response) => {
 try {
+
     const { customer, items, price, pickUpPoint, dropDownPoint } = req.body;
     const order = await orders.makeAnOrder(items, price, pickUpPoint, dropDownPoint, customer );
     res.status(201).json(order);
