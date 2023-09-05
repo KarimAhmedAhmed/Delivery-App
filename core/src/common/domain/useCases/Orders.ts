@@ -57,7 +57,7 @@ import { User } from "../entities/User";
         const startTrip =  await this.orderRepository.startTrip(driver, order);
         
         //TODO
-
+        
 
        return startTrip; 
 

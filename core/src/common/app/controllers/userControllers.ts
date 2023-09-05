@@ -1,7 +1,7 @@
 // controllers/orderController.ts
 import { Request, Response } from 'express';
-import {UserRepository} from '../domain/repositories/User';
-import { Auth } from '../domain/useCases/Auth'
+import {UserRepository} from '../../domain/repositories/User';
+import { Auth } from '../../domain/useCases/Auth'
 class UserController {
 
 constructor(

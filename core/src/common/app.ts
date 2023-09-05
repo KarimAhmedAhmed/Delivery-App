@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import {OrderController} from './controllers/orderControllers';
+import {OrderController} from './app/controllers/orderControllers';
 import Orders from './domain/useCases/Orders';
 import { UserRepository } from './domain/repositories/User';
 import { OrderRepository } from './domain/repositories/Order';
