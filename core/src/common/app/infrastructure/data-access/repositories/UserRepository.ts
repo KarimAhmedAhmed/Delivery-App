@@ -1,13 +1,17 @@
-import { Model } from 'mongoose';
 import UserModel from '../models/user.model';
-class UserRepository {
+import { UserRepository } from '../../../../domain/repositories/User';
+import { User } from '../../../../domain/entities/User';
+import { userRole } from '../dtos/UserDTO';
+
+export class UserRepositoryMongo extends UserRepository{
     private readonly userModel = UserModel;
 
 
 
-    async createUser(user: User): Promise<User> {
+    async createUser(username: string, password: string, role: userRole){
+        const user = new User(username,password,role)
         const newUser = new this.userModel(user);
-        return await newUser.save();
+        await newUser.save()
     }
 
     // async getUserById(userId: string): Promise<User> {

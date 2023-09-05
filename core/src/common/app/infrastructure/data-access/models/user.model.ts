@@ -1,15 +1,16 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
+import { userRole } from '../dtos/UserDTO';
 
 interface IUser extends Document {
     username: string;
     password?: string;
-    role: 'Admin' | 'Customer' | 'Driver';
+    role: userRole
 }
 
 const userSchema = new Schema<IUser>({
-  username: String,
-  password: String,
-  role: String
+  username: { type: String, required: true } ,
+  password: {type: String, required: false},
+  role: {type: String, required: true}
 });
 
 

@@ -11,6 +11,6 @@ export abstract class OrderRepository {
     abstract customerAccepted(driver: User, order:Order): Promise<boolean>;
     abstract raisePriceByDriver(driver:User,order:Order, price:BigInteger): Promise<object | null>;
     abstract startTrip(driver: User, order:Order): Promise<object| null>;
-    abstract notifyTheCustomer(driver:User, order: Order): Promise<boolean>;
+     abstract notifyTheCustomer(driver:User, order: Order): Promise<boolean>;
 
-}
+ }

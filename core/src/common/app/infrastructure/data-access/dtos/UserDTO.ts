@@ -1,6 +1,7 @@
 
-interface User {
+export interface User {
     username: string;
     password?: string;
-    role: 'Admin' | 'Customer' | 'Driver';
+    role: userRole;
 }
+export type userRole = 'Admin' | 'Customer' | 'Driver';

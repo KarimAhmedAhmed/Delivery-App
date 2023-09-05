@@ -2,29 +2,21 @@
 import { Request, Response } from 'express';
 import { Auth } from '../../domain/useCases/Auth'
 import UserModel from '../infrastructure/data-access/models/user.model';
-import { PasswordService } from '../../domain/services/Password';
-import { TokenService } from '../../domain/services/Token';
-import UserRepository from '../infrastructure/data-access/repositories/UserRepository';
+import UserRepository, { UserRepositoryMongo } from '../infrastructure/data-access/repositories/UserRepository';
+import { userRole } from '../infrastructure/data-access/dtos/UserDTO';
 
 
-let userRepository = new UserRepository()
+let userRepository = new UserRepositoryMongo();
 let auth = new Auth(userRepository);
 export const register = async (req: Request, res: Response) => {
 try {
-    console.log("register-usercontroller");
 
     const {role} = req.params; 
-    console.log(role);
-
     const { username, password } = req.body;
-    console.log(username, password);
-
-
-    const user = await auth.register(username, password, role);
-    console.log(user)
+    const user = await auth.register(username, password, role as userRole);
     res.status(201).json(user);
 } catch (error) {
-    console.log(error)
+    res.status(500).json({ error: 'Internal server error' });
 }
 }
 

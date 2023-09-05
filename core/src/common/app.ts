@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 // Define routes
 app.post('/api/orders', createOrder);
-app.post('/api/register', register);
+app.post('/api/register/:role', register);
 
 
 // Handle 404 errors (route not found)
