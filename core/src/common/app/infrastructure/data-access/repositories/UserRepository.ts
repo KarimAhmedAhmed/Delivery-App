@@ -1,15 +1,18 @@
-import { Collection } from 'mongodb';
-import { client } from '../../config/database.config';
+import { Model } from 'mongoose';
 
 class UserRepository {
-    private collection: Collection<User>;
+    constructor(private readonly userModel: Model<User> ) {}
 
-    constructor() {
-        this.collection = client.db('delivery-db').collection('users');
+    async createOrder(user: User): Promise<User> {
+        const newUser = new this.userModel(user);
+        return await newUser.save();
+    }
+
+    async getOrderById(userId: string): Promise<User | null> {
+        return await this.userModel.findById(userId).exec();
     }
 
  
-    // Add more CRUD methods as needed
-}
 
+}
 export default UserRepository;

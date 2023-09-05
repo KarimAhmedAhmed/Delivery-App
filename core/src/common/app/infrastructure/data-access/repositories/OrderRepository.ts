@@ -1,21 +1,19 @@
-import { Collection } from 'mongodb';
-import { client } from '../../config/database.config';
+import { Model } from 'mongoose';
 
 class OrderRepository {
-    private collection: Collection<Order>;
 
-    constructor() {
-        this.collection = client.db('delivery-db').collection('orders');
-    }
+    constructor(private readonly orderModel: Model<Order> ) {}
 
-    async createOrder(order: Order): Promise<void> {
-        await this.collection.insertOne(order);
+    async createOrder(order: Order): Promise<Order> {
+        const newOrder = new this.orderModel(order);
+        return await newOrder.save();
     }
 
     async getOrderById(orderId: string): Promise<Order | null> {
-        return await this.collection.findOne({ _id: orderId });
+        return await this.orderModel.findById(orderId).exec();
     }
 
 }
 
 export default OrderRepository;
+

@@ -3,11 +3,11 @@ import { UserRepository } from "../repositories/User";
 import { OrderRepository } from "../repositories/Order";
 import { User } from "../entities/User";
 
-  class Orders{
+  export class Orders{
 
     constructor(
-        readonly userRepository: UserRepository,
-        readonly orderRepository: OrderRepository
+        private readonly userRepository: UserRepository,
+        private readonly orderRepository: OrderRepository
       ) {}
 
     async makeAnOrder(username: string, items: string[], price:BigInteger, pickUpPoint: string, dropDownPoint: string){
@@ -57,11 +57,10 @@ import { User } from "../entities/User";
         const startTrip =  await this.orderRepository.startTrip(driver, order);
         
         //TODO
-        
+
 
        return startTrip; 
 
     }
 }
 
-export default Orders;
