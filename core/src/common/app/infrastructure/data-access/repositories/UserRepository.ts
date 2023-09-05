@@ -14,10 +14,13 @@ export class UserRepositoryMongo extends UserRepository{
         await newUser.save()
     }
 
-    // async getUserById(userId: string): Promise<User> {
-    //     return await this.userModel.findById(userId).exec();
-    // }
-
+    async getUserById(userId: string) {
+        return await this.userModel.findById(userId).exec();
+    }
+    
+    async getUserByIdAndUpdate(userId: string, newUser:Partial<User> ){
+        return await this.userModel.findByIdAndUpdate(userId, newUser).exec();
+    }
  
 
 }
