@@ -1,8 +1,6 @@
 export class User {
-    constructor(
-      readonly username: string,
-      readonly password: string,
-      readonly role: 'Admin' | 'Customer' | 'Driver'
-        ) {}
-  }
-  
+  constructor(
+    readonly phoneNumber: string,
+    readonly role: "Admin" | "Customer" | "Driver"
+  ) {}
+}

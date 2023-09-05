@@ -10,7 +10,7 @@ let auth = new Auth(userRepository);
 
 export const register = wrapper(async (req: Request, res: Response) => {
   const { role } = req.params;
-  const { username, password } = req.body;
+  const { phoneNumber } = req.body;
   const user = await auth.register(username, password, role as userRole);
   res.status(201).json(user);
 });
