@@ -22,14 +22,8 @@ export const createOrder = wrapper(async (req: Request, res: Response) => {
 });
 
 export const updateOrder = wrapper(async (req: Request, res: Response) => {
-  const { customer, items, price, pickUpPoint, dropDownPoint } = req.body;
-  const order = await orders.createOrder(
-    customer,
-    items,
-    price,
-    pickUpPoint,
-    dropDownPoint
-  );
+  const { order, obj } = req.body;
+  // const updatedOrder = await orders.
   res.status(201).json(order);
 });
 // export const sendOrderToDrivers = async (req: Request, res: Response) => {

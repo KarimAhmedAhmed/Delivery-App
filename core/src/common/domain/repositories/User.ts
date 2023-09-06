@@ -4,7 +4,18 @@ import { User } from "../entities/User";
 
 export abstract class UserRepository {
   abstract createUser(phoneNumber: String, role: userRole): Promise<void>;
-  //   abstract findCustomerByUsername(username: string, role: 'Customer'): Promise<User | null>;
+  abstract getUserByPhoneNumber(phoneNumber: string): Promise<User>;
+
+  abstract getUserById(userId: string): Promise<User>;
+
+  abstract getUserByPhoneNumberAndUpdate(
+    phoneNumber: string,
+    obj: object
+  ): Promise<void>;
+  abstract getUserByIdAndUpdate(userId: string, obj: object): Promise<User>;
+
+  abstract getUsersByRole(role: userRole): Promise<User[]>;
+
   //   abstract findDriverByUsername(username: string, role: 'Driver'): Promise<User | null>
   abstract findDriversByLocation(
     liveLoction: location

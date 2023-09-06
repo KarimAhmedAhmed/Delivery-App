@@ -14,11 +14,32 @@ export class UserRepositoryMongo extends UserRepository {
   }
 
   async getUserById(userId: string) {
-    return await this.userModel.findById(userId).exec();
+    const user = await this.userModel.findById(userId).exec();
+    return user as User;
   }
 
-  async getUserByIdAndUpdate(userId: string, newUser: Partial<User>) {
-    return await this.userModel.findByIdAndUpdate(userId, newUser).exec();
+  async getUserByPhoneNumber(phoneNumber: string) {
+    const user = await this.userModel
+      .findOne({ phoneNumber: phoneNumber })
+      .exec();
+    return user as User;
+  }
+
+  async getUserByIdAndUpdate(userId: string, obj: object) {
+    const user = await this.userModel
+      .findByIdAndUpdate(userId, obj, { new: true })
+      .exec();
+    return user as User;
+  }
+
+  async getUserByPhoneNumberAndUpdate(phoneNumber: string, obj: object) {
+    await this.userModel
+      .findOneAndUpdate({ phoneNumber }, obj, { new: true })
+      .exec();
+  }
+  async getUsersByRole(role: userRole) {
+    const users = await this.userModel.find({ role }).exec();
+    return users as User[];
   }
 
   async findDriversByLocation(liveLoction: location) {

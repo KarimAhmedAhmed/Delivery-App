@@ -6,7 +6,13 @@ import {
   //   orderPending,
   //   orderJourney,
 } from "./app/controllers/orderControllers";
-import { register, login } from "./app/controllers/userControllers";
+import {
+  register,
+  login,
+  getUserById,
+  getUserByIdAndUpdate,
+  getUsersByRole,
+} from "./app/controllers/userControllers";
 import connectDB from "./app/infrastructure/config/database.config";
 
 const ip = require("ip");
@@ -20,6 +26,9 @@ app.use(bodyParser.json());
 // Define user routes
 app.post("/api/register/:role", register);
 app.post("/api/login/", login);
+app.get("/api/user/:userId", getUserById);
+app.get("/api/users/:role", getUsersByRole);
+app.patch("/api/user/:userId", getUserByIdAndUpdate);
 
 // Define order routes
 app.post("/api/createOrder", createOrder);
