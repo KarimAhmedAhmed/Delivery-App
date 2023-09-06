@@ -1,21 +1,41 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { orderStatus } from "../dtos/OrderDTO";
+import { location } from "../../../utils/Middlewares";
 
 interface IOrder extends Document {
-  customerId: number;
+  customerId: string;
   items: { productId: string; quantity: number }[];
-  price: BigInteger;
-  pickupPoint: string;
-  deliveryLocation: string;
-  status: "Pending" | "Delivered" | "Cancelled";
+  price: number;
+  pickupPoint: location;
+  deliveryLocation: location;
+  status: orderStatus;
 }
 
 const OrderSchema = new Schema<IOrder>({
-  customerId: Number,
+  customerId: String,
   items: [String],
   price: Number,
-  pickupPoint: String,
-  deliveryLocation: String,
-  status: String,
+  pickupPoint: {
+    name: String,
+    coordinates: {
+      type: {
+        type: String,
+        default: "Point",
+      },
+      coordinates: [Number], // [longitude, latitude]
+    },
+  },
+  deliveryLocation: {
+    name: String,
+    coordinates: {
+      type: {
+        type: String,
+        default: "Point",
+      },
+      coordinates: [Number], // [longitude, latitude]
+    },
+  },
+  status: { type: String, required: true },
 });
 
 const OrderModel = mongoose.model<IOrder>("Order", OrderSchema);

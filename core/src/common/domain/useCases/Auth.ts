@@ -6,7 +6,7 @@ export class Auth {
   constructor(readonly userRepository: UserRepository) {}
 
   async register(phoneNumber: string, role: userRole) {
-    const user = new User(phoneNumber, "Customer");
+    const user = new User(phoneNumber, role);
     const userCreated = await this.userRepository.createUser(phoneNumber, role);
 
     // if (!userCreated) throw new Error(`User ${username} not found`);

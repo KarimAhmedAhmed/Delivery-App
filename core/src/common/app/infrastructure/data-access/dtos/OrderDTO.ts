@@ -1,10 +1,11 @@
-interface Order {
-  _id: string;
+import { location } from "../../../utils/Middlewares";
+
+export interface Order {
   customerId: string;
   items: { productId: string; quantity: number }[];
-  price: BigInteger;
-  pickupPoint: string;
-  deliveryLocation: string;
+  price: number;
+  pickupPoint: location;
+  deliveryLocation: location;
   status: orderStatus;
 }
 
