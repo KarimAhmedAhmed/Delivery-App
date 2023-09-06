@@ -15,8 +15,8 @@ export class Auth {
     return { userCreated: userCreated };
   }
 
-  async login(username: string, password: string) {
-    const user = new User(username, password, "Customer");
+  async login(username: string) {
+    const user = new User(username, "Customer");
 
     // const userCreated = await this.userRepository.createUser(user);
     // if (!userCreated) throw new Error(`User ${username} not found`);

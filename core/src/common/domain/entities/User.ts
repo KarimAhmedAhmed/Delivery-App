@@ -1,6 +1,8 @@
+import { userRole } from "../../app/infrastructure/data-access/dtos/UserDTO";
+
 export class User {
   constructor(
     readonly phoneNumber: string,
-    readonly role: "Admin" | "Customer" | "Driver"
+    readonly role: userRole
   ) {}
 }
