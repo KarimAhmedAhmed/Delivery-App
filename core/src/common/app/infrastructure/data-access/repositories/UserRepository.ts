@@ -45,12 +45,7 @@ export class UserRepositoryMongo extends UserRepository {
   async findDriversByLocation(liveLoction: location) {
     const newcoordinates = coordinates(liveLoction, 1000);
     const driversAroundOrderLocation = await this.userModel.find({
-      // liveLocation: {
-      //   $near: {
-      //     $geometry: liveLoction,
-      //     $maxDistance: 1000,
-      //   },
-      // },
+      liveLocation: newcoordinates,
       role: "Driver",
     });
     return driversAroundOrderLocation;

@@ -33,9 +33,9 @@ export class Orders {
       dropDownPoint
     );
     console.log(newOrder.pickUpPoint.coordinates.coordinates);
-    await this.sendOrderToDrivers(newOrder);
+    const drivers = await this.sendOrderToDrivers(newOrder);
 
-    return orderCreated;
+    return drivers;
   }
 
   async sendOrderToDrivers(order: Order) {
@@ -45,7 +45,7 @@ export class Orders {
     console.log(drivers);
     const setDrivers = await this.orderRepository.setDriver(drivers, order);
 
-    return setDrivers;
+    return drivers;
   }
 
   //   async orderPending(order: Order, driver: User, price: BigInteger) {

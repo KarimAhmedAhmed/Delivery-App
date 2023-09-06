@@ -11,7 +11,7 @@ export abstract class OrderRepository {
     dropDownPoint: location
   ): Promise<void>;
   abstract updateOrder(order: Order, obj: object): Promise<void>;
-  abstract setDriver(driver: Partial<User[]>, order: Order): Promise<object>;
+  abstract setDriver(driver: User[], order: Order): Promise<object>;
   //   abstract declineDriver(driver: User, order: Order): Promise<boolean>;
   //   abstract driverAccepted(driver: User, order: Order): Promise<boolean>;
   //   abstract customerAccepted(driver: User, order: Order): Promise<boolean>;

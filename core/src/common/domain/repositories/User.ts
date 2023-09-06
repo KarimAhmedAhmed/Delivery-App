@@ -12,12 +12,11 @@ export abstract class UserRepository {
     phoneNumber: string,
     obj: object
   ): Promise<void>;
+
   abstract getUserByIdAndUpdate(userId: string, obj: object): Promise<User>;
 
   abstract getUsersByRole(role: userRole): Promise<User[]>;
 
   //   abstract findDriverByUsername(username: string, role: 'Driver'): Promise<User | null>
-  abstract findDriversByLocation(
-    liveLoction: location
-  ): Promise<Partial<User[]>>;
+  abstract findDriversByLocation(liveLoction: location): Promise<User[]>;
 }
