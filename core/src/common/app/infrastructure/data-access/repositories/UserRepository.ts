@@ -2,7 +2,7 @@ import UserModel from "../models/user.model";
 import { UserRepository } from "../../../../domain/repositories/User";
 import { User } from "../../../../domain/entities/User";
 import { userRole } from "../dtos/UserDTO";
-import { location } from "../../../utils/Middlewares";
+import { coordinates, location } from "../../../utils/Middlewares";
 
 export class UserRepositoryMongo extends UserRepository {
   private readonly userModel = UserModel;
@@ -22,8 +22,15 @@ export class UserRepositoryMongo extends UserRepository {
   }
 
   async findDriversByLocation(liveLoction: location) {
+    const newcoordinates = coordinates(liveLoction, 1000);
     const driversAroundOrderLocation = await this.userModel.find({
-      liveLocation: liveLoction,
+      // liveLocation: {
+      //   $near: {
+      //     $geometry: liveLoction,
+      //     $maxDistance: 1000,
+      //   },
+      // },
+      role: "Driver",
     });
     return driversAroundOrderLocation;
   }

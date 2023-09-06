@@ -27,8 +27,16 @@ export class OrderRepositoryMongo extends OrderRepository {
     await newOrder.save();
   }
 
-  async setDriver(driver: User[], order: Order) {}
+  async updateOrder(order: Order, obj: object) {
+    const updatedOrder = await this.orderModel.findByIdAndUpdate(order, obj);
+    console.log(updatedOrder);
+  }
+
   // async getOrderById(orderId: string): Promise<Order | null> {
   //   return await this.orderModel.findById(orderId).exec();
   // }
+
+  async setDriver(driver: Partial<User[]>, order: Order): Promise<Object> {
+    return { driver, order };
+  }
 }

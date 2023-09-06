@@ -32,6 +32,7 @@ export class Orders {
       pickUpPoint,
       dropDownPoint
     );
+    console.log(newOrder.pickUpPoint.coordinates.coordinates);
     await this.sendOrderToDrivers(newOrder);
 
     return orderCreated;
@@ -41,8 +42,8 @@ export class Orders {
     const drivers = await this.userRepository.findDriversByLocation(
       order.pickUpPoint
     );
+    console.log(drivers);
     const setDrivers = await this.orderRepository.setDriver(drivers, order);
-    // if (!setDrivers) throw new Error();
 
     return setDrivers;
   }
