@@ -6,12 +6,19 @@ import { wrapper } from "../utils/Wrapper";
 import { UserRepositoryMongo } from "../infrastructure/data-access/repositories/UserRepository";
 import { OfferRepository } from "../../domain/repositories/Offer";
 import { OfferRepositoryMongo } from "../infrastructure/data-access/repositories/OfferRepository";
+import { tokenServiceMongo } from "../infrastructure/data-access/repositories/TokenRepositoryMongo";
 
 let orderRepository = new OrderRepositoryMongo();
 let userRepository = new UserRepositoryMongo();
 let offerRepository = new OfferRepositoryMongo();
+let tokenService = new tokenServiceMongo();
 
-let orders = new Orders(userRepository, orderRepository, offerRepository);
+let orders = new Orders(
+  userRepository,
+  orderRepository,
+  offerRepository,
+  tokenService
+);
 
 export const createOrder = wrapper(async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];

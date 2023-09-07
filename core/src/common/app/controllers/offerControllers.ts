@@ -6,13 +6,20 @@ import { Offers } from "../../domain/useCases/Offers";
 import { Orders } from "../../domain/useCases/Orders";
 import { OrderRepositoryMongo } from "../infrastructure/data-access/repositories/OrderRepository";
 import { UserRepositoryMongo } from "../infrastructure/data-access/repositories/UserRepository";
+import { tokenServiceMongo } from "../infrastructure/data-access/repositories/TokenRepositoryMongo";
 
 let offerRepository = new OfferRepositoryMongo();
 let orderRepository = new OrderRepositoryMongo();
 let userRepository = new UserRepositoryMongo();
+let tokenService = new tokenServiceMongo();
 
 let offers = new Offers(offerRepository);
-let orders = new Orders(userRepository, orderRepository, offerRepository);
+let orders = new Orders(
+  userRepository,
+  orderRepository,
+  offerRepository,
+  tokenService
+);
 
 export const updateOffer = wrapper(async (req: Request, res: Response) => {
   const { offerId, obj } = req.body;
