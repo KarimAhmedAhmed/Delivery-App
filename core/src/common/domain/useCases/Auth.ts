@@ -11,7 +11,9 @@ export class Auth {
   ) {}
 
   async register(phoneNumber: string, role: userRole) {
-    const user = new User(phoneNumber, role);
+    const user = await this.userRepository.getUserByPhoneNumber(phoneNumber);
+    if (user) throw new Error(`This phonenumber is already used`);
+    new User(phoneNumber, role);
     const userCreated = await this.userRepository.createUser(phoneNumber, role);
 
     const accessToken = await this.tokenService.createAccessToken(

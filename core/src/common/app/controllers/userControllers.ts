@@ -16,7 +16,7 @@ let auth = new Auth(userRepository, tokenService);
 export const register = wrapper(async (req: Request, res: Response) => {
   const { role } = req.params;
   const { phoneNumber } = req.body;
-  const validatePhoneNumber = isPhoneNumber(phoneNumber);
+  const validatePhoneNumber = isPhoneNumber(phoneNumber, "EG");
   if (!validatePhoneNumber) throw new Error("Invalid phone number format");
   const user = await auth.register(phoneNumber, role as userRole);
 
