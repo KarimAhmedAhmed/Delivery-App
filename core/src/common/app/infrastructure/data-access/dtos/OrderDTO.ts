@@ -2,7 +2,7 @@ import { location } from "../../../utils/Middlewares";
 
 export interface Order {
   customerId: string;
-  items: { productId: string; quantity: number }[];
+  items: string[];
   price: number;
   pickupPoint: location;
   deliveryLocation: location;

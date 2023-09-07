@@ -3,11 +3,16 @@ import { UserRepository } from "../repositories/User";
 import { OrderRepository } from "../repositories/Order";
 import { User } from "../entities/User";
 import { location } from "../../app/utils/Middlewares";
+import { OfferRepository } from "../repositories/Offer";
+import { Offer } from "../entities/Offer";
+import { TokenService } from "../services/Token";
 
 export class Orders {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly orderRepository: OrderRepository
+    private readonly orderRepository: OrderRepository,
+    private readonly offerRepository: OfferRepository,
+    private readonly tokenService: TokenService
   ) {}
 
   async createOrder(
@@ -15,8 +20,11 @@ export class Orders {
     items: string[],
     price: number,
     pickUpPoint: location,
-    dropDownPoint: location
+    dropDownPoint: location,
+    token: string
   ) {
+    await this.tokenService.checkAuthToken(token);
+
     const newOrder = new Order(
       customer,
       items,
@@ -30,24 +38,45 @@ export class Orders {
       items,
       price,
       pickUpPoint,
-      dropDownPoint
+      dropDownPoint,
+      token
     );
     console.log(newOrder.pickUpPoint.coordinates.coordinates);
-    const drivers = await this.sendOrderToDrivers(newOrder);
+    const drivers = await this.sendOrderToDrivers(newOrder, token);
 
     return drivers;
   }
+  async updateOrder(orderId: string, obj: object, token: string) {
+    await this.tokenService.checkAuthToken(token);
 
-  async sendOrderToDrivers(order: Order) {
+    const updateOrder = await this.orderRepository.updateOrder(
+      orderId,
+      obj,
+      token
+    );
+    return updateOrder;
+  }
+
+  async sendOrderToDrivers(order: Order, token: string) {
+    await this.tokenService.checkAuthToken(token);
+
     const drivers = await this.userRepository.findDriversByLocation(
       order.pickUpPoint
     );
     console.log(drivers);
-    const setDrivers = await this.orderRepository.setDriver(drivers, order);
+
+    drivers.forEach((driver) => {
+      this.offerRepository.createOffer(order, driver, 0, "Pending");
+    });
 
     return drivers;
   }
 
+  async getOrderById(orderId: string, token: string) {
+    await this.tokenService.checkAuthToken(token);
+    const order = await this.orderRepository.getOrderById(orderId, token);
+    return order;
+  }
   //   async orderPending(order: Order, driver: User, price: BigInteger) {
   //     //the driver raised the order price
   //     const raisePriceByDriver = await this.orderRepository.raisePriceByDriver(
@@ -69,34 +98,16 @@ export class Orders {
 
   //     return notifyTheCustomer;
   //   }
-  //   async orderAccepted(order: Order, driver: User) {
-  //     //the customer accepted the driver
-  //     const driverAcceptedByCustomer =
-  //       await this.orderRepository.customerAccepted(driver, order);
-  //     if (!driverAcceptedByCustomer) throw new Error();
-  //     //the driver accepted the order
-  //     const orderAcceptedByDriver = await this.orderRepository.driverAccepted(
-  //       driver,
-  //       order
-  //     );
-  //     if (!orderAcceptedByDriver) throw new Error();
+  async orderAccepted(offer: Offer, token: string) {
+    //the customer accepted the driver
+    const driverAcceptedByCustomer =
+      await this.orderRepository.customerAcceptedDriver(offer, token);
 
-  //     let newOrder = new Order(
-  //       order.customer,
-  //       order.items,
-  //       order.price,
-  //       order.pickUpPoint,
-  //       order.dropDownPoint,
-  //       "On-The-Way"
-  //     );
-  //     const updateOrder = await this.orderRepository.updateOrder(order, newOrder);
+    //   //start the trip
+    // const startTrip = await this.orderRepository.startTrip(driver, order);
 
-  //     if (!updateOrder) throw new Error();
-  //     //start the trip
-  //     const startTrip = await this.orderRepository.startTrip(driver, order);
+    //TODO
 
-  //     //TODO
-
-  //     return startTrip;
-  //   }
+    return driverAcceptedByCustomer;
+  }
 }

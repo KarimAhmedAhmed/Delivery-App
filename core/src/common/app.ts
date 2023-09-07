@@ -2,6 +2,8 @@ import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
 import {
   createOrder,
+  getOrderById,
+  updateOrder,
   //   sendOrderToDrivers,
   //   orderPending,
   //   orderJourney,
@@ -15,6 +17,11 @@ import {
   verifyUser,
 } from "./app/controllers/userControllers";
 import connectDB from "./app/infrastructure/config/database.config";
+import {
+  customerAcceptedDriverOffer,
+  customerDeclinedDriverOffer,
+  updateOffer,
+} from "./app/controllers/offerControllers";
 
 const ip = require("ip");
 const app: Application = express();
@@ -33,7 +40,14 @@ app.get("/api/users/:role", getUsersByRole);
 app.patch("/api/user/:userId", getUserByIdAndUpdate);
 
 // Define order routes
-app.post("/api/createOrder", createOrder);
+app.post("/api/order", createOrder);
+app.patch("/api/order", updateOrder);
+app.get("/api/order", getOrderById);
+
+//Define offer routes
+app.patch("/api/offer", updateOffer);
+app.patch("/api/offer/accepted", customerAcceptedDriverOffer);
+app.patch("/api/offer/declined", customerDeclinedDriverOffer);
 
 // Handle 404 errors (route not found)
 app.use((req, res) => {

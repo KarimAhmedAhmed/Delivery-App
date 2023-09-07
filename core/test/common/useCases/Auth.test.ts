@@ -1,6 +1,6 @@
 import { instance, mock, when } from "ts-mockito";
 import { UserRepository } from "../../../src/common/domain/repositories/User";
-import { Auth } from "../../../src/common/domain/useCases/Auth";
+import { Auth } from "../../../src/common/domain/useCases/User";
 
 describe("auth", () => {
   let userRepository: UserRepository;

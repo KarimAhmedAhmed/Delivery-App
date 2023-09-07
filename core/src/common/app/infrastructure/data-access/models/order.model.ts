@@ -1,21 +1,22 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { orderStatus } from "../dtos/OrderDTO";
 import { location } from "../../../utils/Middlewares";
+import { Order } from "../../../../domain/entities/Order";
 
-interface IOrder extends Document {
+export interface IOrder extends Document {
   customerId: string;
-  items: { productId: string; quantity: number }[];
+  items: string[];
   price: number;
   pickupPoint: location;
   deliveryLocation: location;
   status: orderStatus;
 }
 
-const OrderSchema = new Schema<IOrder>({
+const OrderSchema = new Schema<Order>({
   customerId: String,
   items: [String],
   price: Number,
-  pickupPoint: {
+  pickUpPoint: {
     name: String,
     coordinates: {
       type: {
@@ -38,6 +39,6 @@ const OrderSchema = new Schema<IOrder>({
   status: { type: String, required: true },
 });
 
-const OrderModel = mongoose.model<IOrder>("Order", OrderSchema);
+const OrderModel = mongoose.model<Order>("Order", OrderSchema);
 
 export default OrderModel;

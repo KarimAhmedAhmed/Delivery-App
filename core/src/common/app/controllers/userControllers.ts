@@ -1,6 +1,6 @@
 // controllers/orderController.ts
 import { Request, Response } from "express";
-import { Auth } from "../../domain/useCases/Auth";
+import { Auth } from "../../domain/useCases/User";
 import { UserRepositoryMongo } from "../infrastructure/data-access/repositories/UserRepository";
 import { userRole } from "../infrastructure/data-access/dtos/UserDTO";
 import { wrapper } from "../utils/Wrapper";
