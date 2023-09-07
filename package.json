@@ -13,6 +13,8 @@
   "devDependencies": {
     "@tsconfig/node18": "^18.2.1",
     "@types/jest": "^29.5.4",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/otp-generator": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "eslint": "^8.48.0",
@@ -38,8 +40,11 @@
     "body-parser": "^1.20.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.0.0",
-    "mongoose": "^7.5.0"
+    "mongoose": "^7.5.0",
+    "otp-generator": "^4.0.1"
   }
 }

@@ -12,6 +12,7 @@ import {
   getUserById,
   getUserByIdAndUpdate,
   getUsersByRole,
+  verifyUser,
 } from "./app/controllers/userControllers";
 import connectDB from "./app/infrastructure/config/database.config";
 
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 
 // Define user routes
 app.post("/api/register/:role", register);
+app.post("/api/verify/", verifyUser);
 app.post("/api/login/", login);
 app.get("/api/user/:userId", getUserById);
 app.get("/api/users/:role", getUsersByRole);

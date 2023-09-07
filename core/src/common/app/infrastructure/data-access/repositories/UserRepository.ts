@@ -13,6 +13,12 @@ export class UserRepositoryMongo extends UserRepository {
     await newUser.save();
   }
 
+  async verifyUser(otp: number) {
+    const sentOTP = 123456;
+    if (otp != sentOTP) throw new Error("Wrong OTP");
+    return true;
+  }
+
   async getUserById(userId: string) {
     const user = await this.userModel.findById(userId).exec();
     return user as User;
