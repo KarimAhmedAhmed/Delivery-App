@@ -4,10 +4,7 @@ import { offerStatus } from "../dtos/OfferDTO";
 import { OfferRepository } from "../../../../domain/repositories/Offer";
 import { Order } from "../../../../domain/entities/Order";
 import { User } from "../../../../domain/entities/User";
-import { updateOrder } from "../../../controllers/orderControllers";
-import { OrderRepositoryMongo } from "./OrderRepository";
 
-let orderRepository = new OrderRepositoryMongo();
 export class OfferRepositoryMongo extends OfferRepository {
   private readonly offerModel = OfferModel;
 
