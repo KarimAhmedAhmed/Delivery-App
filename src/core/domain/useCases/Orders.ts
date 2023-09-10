@@ -17,8 +17,7 @@ export class Orders {
     items: string[],
     price: number,
     pickUpPoint: location,
-    dropDownPoint: location,
-    token: string
+    dropDownPoint: location
   ) {
     const newOrder = new Order(
       customer,
@@ -33,11 +32,9 @@ export class Orders {
       items,
       price,
       pickUpPoint,
-      dropDownPoint,
-      token
+      dropDownPoint
     );
-    console.log(newOrder.pickUpPoint.coordinates.coordinates);
-    const drivers = await this.sendOrderToDrivers(newOrder);
+    const drivers = await this.sendOrderToDrivers(orderCreated);
 
     return drivers;
   }
@@ -47,10 +44,10 @@ export class Orders {
   }
 
   async sendOrderToDrivers(order: Order) {
-    const drivers = await this.userRepository.findDriversByLocation(
-      order.pickUpPoint
-    );
-    console.log(drivers);
+    // const drivers = await this.userRepository.findDriversByLocation(
+    //   order.pickUpPoint
+    // );
+    const drivers = await this.userRepository.getUsersByRole("Driver");
 
     drivers.forEach((driver) => {
       this.offerRepository.createOffer(order, driver, 0, "Pending");
@@ -63,34 +60,11 @@ export class Orders {
     const order = await this.orderRepository.getOrderById(orderId);
     return order;
   }
-  //   async orderPending(order: Order, driver: User, price: BigInteger) {
-  //     //the driver raised the order price
-  //     const raisePriceByDriver = await this.orderRepository.raisePriceByDriver(
-  //       driver,
-  //       order,
-  //       price
-  //     );
-  //     if (!raisePriceByDriver) throw new Error();
-  //     const updateOrder = await this.orderRepository.updateOrder(
-  //       order,
-  //       raisePriceByDriver
-  //     );
-  //     if (!updateOrder) throw new Error();
-  //     const notifyTheCustomer = await this.orderRepository.notifyTheCustomer(
-  //       driver,
-  //       order
-  //     );
-  //     if (!notifyTheCustomer) throw new Error();
 
-  //     return notifyTheCustomer;
-  //   }
-  async orderAccepted(offer: Offer, token: string) {
+  async orderAccepted(offer: Offer | null) {
     //the customer accepted the driver
     const driverAcceptedByCustomer =
       await this.orderRepository.customerAcceptedDriver(offer);
-
-    //   //start the trip
-    // const startTrip = await this.orderRepository.startTrip(driver, order);
 
     //TODO
 

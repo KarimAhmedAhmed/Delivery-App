@@ -2,6 +2,7 @@ import { Order } from "../entities/Order";
 import { User } from "../entities/User";
 import { OfferRepository } from "../repositories/Offer";
 import { Offer } from "../entities/Offer";
+import { ObjectId } from "mongoose";
 
 export class Offers {
   constructor(private readonly offerRepository: OfferRepository) {}

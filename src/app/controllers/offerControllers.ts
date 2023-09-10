@@ -21,9 +21,9 @@ export const updateOffer = wrapper(async (req: Request, res: Response) => {
 
 export const customerAcceptedDriverOffer = wrapper(
   async (req: Request, res: Response) => {
-    const { offerId } = req.body;
+    const { offerId } = req.params;
     const offerAccepted = await offers.customerAcceptedDriverOffer(offerId);
-    // const updateOrder = await orders.updateOrder(offerAccepted.order, { ""});
+    await orders.orderAccepted(offerAccepted);
     res.status(201).json(offerAccepted);
   }
 );

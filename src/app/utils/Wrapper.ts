@@ -9,9 +9,16 @@ export const wrapper = (func: func) => {
   return async (req: Request, res: Response) => {
     try {
       await func(req, res);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      res.status(500).json({ error: "Internal server error" });
+      const statusCode = getStatusCodeForError(error);
+      let message = (error as Error).constructor.name;
+      if (message.toLowerCase() === "error") {
+        message = "Internal Server Error";
+      }
+      return res
+        .status(statusCode || 500)
+        .json({ error: error.message || message });
     }
   };
 };

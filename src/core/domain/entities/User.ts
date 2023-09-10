@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { location } from "../types/location";
 import { userRole } from "../types/userRole";
 
@@ -6,6 +7,7 @@ export class User {
     readonly phoneNumber: string,
     readonly role: userRole,
     readonly password?: string,
-    readonly liveLoction?: location
+    readonly liveLoction?: location,
+    readonly isVerified?: boolean
   ) {}
 }

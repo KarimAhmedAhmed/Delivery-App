@@ -3,7 +3,7 @@ import { PermissionError } from "../../core/utils/Errors";
 import { checkAuthToken } from "../../core/implementation/service/JWTTokenService";
 
 export const ensureAuth = async (
-  request: any,
+  request: Request,
   response: Response,
   next: NextFunction
 ) => {
@@ -11,14 +11,11 @@ export const ensureAuth = async (
     const token = request.headers.authorization?.split(" ")[1];
     if (!token) throw new PermissionError("Unauthorized");
 
-    request.token = token;
-
     //TODO:
     // validate the token and extract the payload of it
-    const user = checkAuthToken(token);
+    const user = await checkAuthToken(token);
 
     if (!user) throw new PermissionError("Unauthorized");
-    request.user = user;
 
     next();
   } catch (error) {

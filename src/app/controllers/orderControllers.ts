@@ -12,17 +12,13 @@ let offerRepository = new OfferRepositoryMongo();
 let orders = new Orders(userRepository, orderRepository, offerRepository);
 
 export const createOrder = wrapper(async (req: Request, res: Response) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) throw new Error("Unauthorized");
-
   const { customer, items, price, pickUpPoint, dropDownPoint } = req.body;
   const order = await orders.createOrder(
     customer,
     items,
     price,
     pickUpPoint,
-    dropDownPoint,
-    token
+    dropDownPoint
   );
   res.status(201).json(order);
 });

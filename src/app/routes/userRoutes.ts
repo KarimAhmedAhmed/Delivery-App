@@ -14,7 +14,7 @@ router.post("/register/:role", register);
 router.post("/verify/", verifyUser);
 router.post("/login/", login);
 router.get("/:userId", ensureAuth, getUserById);
-router.get("/:role", ensureAuth, getUsersByRole);
+router.get("/role/:role", ensureAuth, getUsersByRole);
 router.patch("/:userId", ensureAuth, getUserByIdAndUpdate);
 
 export const UserRouter = router;

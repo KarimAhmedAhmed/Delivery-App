@@ -17,13 +17,13 @@ export class OfferRepositoryMongo extends OfferRepository {
     const offer = new Offer(order, driver, raisedPrice, status);
     const newOrder = new this.offerModel(offer);
     await newOrder.save();
+    return offer;
   }
 
   async updateOffer(offerId: string, obj: object) {
     const updatedOffer = await this.offerModel.findByIdAndUpdate(offerId, obj, {
       new: true,
     });
-    console.log(updatedOffer);
     return true;
   }
 
@@ -44,8 +44,7 @@ export class OfferRepositoryMongo extends OfferRepository {
         new: true,
       }
     );
-
-    return acceptedOffer as Offer;
+    return acceptedOffer;
   }
 
   async customerDeclinedDriverOffer(offerId: string) {
@@ -56,7 +55,6 @@ export class OfferRepositoryMongo extends OfferRepository {
         new: true,
       }
     );
-    console.log(declinedOffer);
     return true;
   }
 }

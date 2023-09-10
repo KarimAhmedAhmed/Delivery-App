@@ -8,11 +8,10 @@ export abstract class OrderRepository {
     items: string[],
     price: number,
     pickUpPoint: location,
-    dropDownPoint: location,
-    token: string
-  ): Promise<void>;
+    dropDownPoint: location
+  ): Promise<Order>;
   abstract updateOrder(orderId: string, obj: object): Promise<boolean>;
-  abstract customerAcceptedDriver(offer: Offer): Promise<void>;
+  abstract customerAcceptedDriver(offer: Offer | null): Promise<void>;
   abstract getOrderById(orderId: string): Promise<Order>;
   // abstract driverAcceptedAnOrder(driver: User, order: Order): Promise<boolean>;
   //   abstract raisePriceByDriver(

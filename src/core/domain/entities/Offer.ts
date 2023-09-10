@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { offerStatus } from "../types/offerStatus";
 import { Order } from "./Order";
 import { User } from "./User";
@@ -8,6 +9,7 @@ export class Offer {
     readonly driver: User,
     readonly raisedPrice: number,
     // readonly distance: number,
-    readonly status: offerStatus
+    readonly status: offerStatus,
+    readonly _id?: ObjectId
   ) {}
 }

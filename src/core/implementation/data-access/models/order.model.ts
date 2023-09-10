@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types, ObjectId } from "mongoose";
 import { location } from "../../../domain/types/location";
 import { orderStatus } from "../../../domain/types/orderStatus";
 import { Order } from "../../../domain/entities/Order";
@@ -37,6 +37,7 @@ const OrderSchema = new Schema<Order>({
     },
   },
   status: { type: String, required: true },
+  offer: { type: Object, required: false },
 });
 
 const OrderModel = mongoose.model<Order>("Order", OrderSchema);

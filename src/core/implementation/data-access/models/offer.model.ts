@@ -2,8 +2,8 @@ import mongoose, { Schema, Document } from "mongoose";
 import { Offer } from "../../../domain/entities/Offer";
 
 const OfferSchema = new Schema<Offer>({
-  order: { type: String, required: true },
-  driver: { type: String, required: true },
+  order: { type: Object, required: true },
+  driver: { type: Object, required: true },
   raisedPrice: { type: Number, required: false },
   status: { type: String, required: true },
 });

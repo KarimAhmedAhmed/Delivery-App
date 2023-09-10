@@ -28,13 +28,13 @@ export class OrderRepositoryMongo extends OrderRepository {
     );
     const newOrder = new this.orderModel(order);
     await newOrder.save();
+    return newOrder;
   }
 
   async updateOrder(orderId: string, obj: object) {
     const updatedOrder = await this.orderModel.findByIdAndUpdate(orderId, obj, {
       new: true,
     });
-    console.log(updatedOrder);
     return true;
   }
 
@@ -44,9 +44,13 @@ export class OrderRepositoryMongo extends OrderRepository {
   }
 
   async customerAcceptedDriver(offer: Offer) {
+    const filterOffer = await this.offerModel
+      .findOne(offer)
+      .select("driver, raised");
+
     const order = await this.orderModel.findOneAndUpdate(offer.order, {
       status: "On-The-Way",
+      offer: offer,
     });
-    console.log(order);
   }
 }

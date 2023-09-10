@@ -1,5 +1,7 @@
+import { ObjectId } from "mongoose";
 import { location } from "../types/location";
 import { orderStatus } from "../types/orderStatus";
+import { Offer } from "./Offer";
 
 export class Order {
   constructor(
@@ -8,6 +10,7 @@ export class Order {
     readonly price: number,
     readonly pickUpPoint: location,
     readonly deliveryLocation: location,
-    readonly status: orderStatus
+    readonly status: orderStatus,
+    readonly offer?: Offer
   ) {}
 }
