@@ -1,11 +1,11 @@
 // controllers/orderController.ts
 import { Request, Response } from "express";
-import { Auth } from "../../domain/useCases/User";
-import { UserRepositoryMongo } from "../infrastructure/data-access/repositories/UserRepository";
-import { userRole } from "../infrastructure/data-access/dtos/UserDTO";
+import { Auth } from "../../../core/src/common/domain/useCases/User";
+import { UserRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/UserRepository";
+import { userRole } from "../../../core/src/common/app/infrastructure/data-access/dtos/UserDTO";
 import { wrapper } from "../utils/Wrapper";
 import { isPhoneNumber } from "class-validator";
-import { tokenServiceMongo } from "../infrastructure/data-access/repositories/TokenRepositoryMongo";
+import { tokenServiceMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/TokenRepositoryMongo";
 import jwt from "jsonwebtoken";
 
 let userRepository = new UserRepositoryMongo();

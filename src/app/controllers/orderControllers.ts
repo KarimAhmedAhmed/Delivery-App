@@ -1,12 +1,12 @@
 // controllers/orderController.ts
 import { Request, Response } from "express";
-import { Orders } from "../../domain/useCases/Orders";
-import { OrderRepositoryMongo } from "../infrastructure/data-access/repositories/OrderRepository";
+import { Orders } from "../../../core/src/common/domain/useCases/Orders";
+import { OrderRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/OrderRepository";
 import { wrapper } from "../utils/Wrapper";
-import { UserRepositoryMongo } from "../infrastructure/data-access/repositories/UserRepository";
-import { OfferRepository } from "../../domain/repositories/Offer";
-import { OfferRepositoryMongo } from "../infrastructure/data-access/repositories/OfferRepository";
-import { tokenServiceMongo } from "../infrastructure/data-access/repositories/TokenRepositoryMongo";
+import { UserRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/UserRepository";
+import { OfferRepository } from "../../../core/src/common/domain/repositories/Offer";
+import { OfferRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/OfferRepository";
+import { tokenServiceMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/TokenRepositoryMongo";
 
 let orderRepository = new OrderRepositoryMongo();
 let userRepository = new UserRepositoryMongo();

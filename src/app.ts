@@ -16,12 +16,13 @@ import {
   getUsersByRole,
   verifyUser,
 } from "./app/controllers/userControllers";
-import connectDB from "./app/infrastructure/config/database.config";
+import connectDB from "../core/src/common/app/infrastructure/config/database.config";
 import {
   customerAcceptedDriverOffer,
   customerDeclinedDriverOffer,
   updateOffer,
 } from "./app/controllers/offerControllers";
+import { UserRouter } from "./app/routes/userRoutes";
 
 const ip = require("ip");
 const app: Application = express();
@@ -30,14 +31,7 @@ connectDB();
 
 // Middleware for parsing JSON request bodies
 app.use(bodyParser.json());
-
-// Define user routes
-app.post("/api/register/:role", register);
-app.post("/api/verify/", verifyUser);
-app.post("/api/login/", login);
-app.get("/api/user/:userId", getUserById);
-app.get("/api/users/:role", getUsersByRole);
-app.patch("/api/user/:userId", getUserByIdAndUpdate);
+app.use("/api/user/", UserRouter);
 
 // Define order routes
 app.post("/api/order", createOrder);
