@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { PermissionError } from "../../core/utils/Errors";
+import { checkAuthToken } from "../../core/implementation/service/JWTTokenService";
 
 export const ensureAuth = async (
   request: any,
@@ -14,7 +15,7 @@ export const ensureAuth = async (
 
     //TODO:
     // validate the token and extract the payload of it
-    const user = jwtVerifyAccessToken(token);
+    const user = checkAuthToken(token);
 
     if (!user) throw new PermissionError("Unauthorized");
     request.user = user;

@@ -16,13 +16,13 @@ import {
   getUsersByRole,
   verifyUser,
 } from "./app/controllers/userControllers";
-import connectDB from "../core/src/common/app/infrastructure/config/database.config";
 import {
   customerAcceptedDriverOffer,
   customerDeclinedDriverOffer,
   updateOffer,
 } from "./app/controllers/offerControllers";
 import { UserRouter } from "./app/routes/userRoutes";
+import connectDB from "./app/infrastructure/config/database.config";
 
 const ip = require("ip");
 const app: Application = express();

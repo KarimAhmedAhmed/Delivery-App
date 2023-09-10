@@ -1,10 +1,4 @@
-export type location = {
-  name: string;
-  coordinates: {
-    type: string;
-    coordinates: [number, number]; // [longitude, latitude]
-  };
-};
+import { location } from "../../core/domain/types/location";
 
 export const coordinates = (liveLoction: location, maxDistance: Number) => {
   const nearestCoordinates = {

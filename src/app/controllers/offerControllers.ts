@@ -1,25 +1,17 @@
-// controllers/orderController.ts
 import { Request, Response } from "express";
 import { wrapper } from "../utils/Wrapper";
-import { OfferRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/OfferRepository";
-import { Offers } from "../../../core/src/common/domain/useCases/Offers";
-import { Orders } from "../../../core/src/common/domain/useCases/Orders";
-import { OrderRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/OrderRepository";
-import { UserRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/UserRepository";
-import { tokenServiceMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/TokenRepositoryMongo";
+import { OfferRepositoryMongo } from "../../core/implementation/repositories/OfferRepository";
+import { OrderRepositoryMongo } from "../../core/implementation/repositories/OrderRepository";
+import { UserRepositoryMongo } from "../../core/implementation/repositories/UserRepository";
+import { Offers } from "../../core/domain/useCases/Offers";
+import { Orders } from "../../core/domain/useCases/Orders";
 
 let offerRepository = new OfferRepositoryMongo();
 let orderRepository = new OrderRepositoryMongo();
 let userRepository = new UserRepositoryMongo();
-let tokenService = new tokenServiceMongo();
 
 let offers = new Offers(offerRepository);
-let orders = new Orders(
-  userRepository,
-  orderRepository,
-  offerRepository,
-  tokenService
-);
+let orders = new Orders(userRepository, orderRepository, offerRepository);
 
 export const updateOffer = wrapper(async (req: Request, res: Response) => {
   const { offerId, obj } = req.body;

@@ -1,17 +1,15 @@
 import { Order } from "../entities/Order";
 import { UserRepository } from "../repositories/User";
 import { OrderRepository } from "../repositories/Order";
-import { location } from "../../../../../src/app/utils/Middlewares";
 import { OfferRepository } from "../repositories/Offer";
 import { Offer } from "../entities/Offer";
-import { TokenService } from "../services/Token";
+import { location } from "../types/location";
 
 export class Orders {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly orderRepository: OrderRepository,
-    private readonly offerRepository: OfferRepository,
-    private readonly tokenService: TokenService
+    private readonly offerRepository: OfferRepository
   ) {}
 
   async createOrder(
@@ -22,8 +20,6 @@ export class Orders {
     dropDownPoint: location,
     token: string
   ) {
-    await this.tokenService.checkAuthToken(token);
-
     const newOrder = new Order(
       customer,
       items,
@@ -41,24 +37,16 @@ export class Orders {
       token
     );
     console.log(newOrder.pickUpPoint.coordinates.coordinates);
-    const drivers = await this.sendOrderToDrivers(newOrder, token);
+    const drivers = await this.sendOrderToDrivers(newOrder);
 
     return drivers;
   }
-  async updateOrder(orderId: string, obj: object, token: string) {
-    await this.tokenService.checkAuthToken(token);
-
-    const updateOrder = await this.orderRepository.updateOrder(
-      orderId,
-      obj,
-      token
-    );
+  async updateOrder(orderId: string, obj: object) {
+    const updateOrder = await this.orderRepository.updateOrder(orderId, obj);
     return updateOrder;
   }
 
-  async sendOrderToDrivers(order: Order, token: string) {
-    await this.tokenService.checkAuthToken(token);
-
+  async sendOrderToDrivers(order: Order) {
     const drivers = await this.userRepository.findDriversByLocation(
       order.pickUpPoint
     );
@@ -71,9 +59,8 @@ export class Orders {
     return drivers;
   }
 
-  async getOrderById(orderId: string, token: string) {
-    await this.tokenService.checkAuthToken(token);
-    const order = await this.orderRepository.getOrderById(orderId, token);
+  async getOrderById(orderId: string) {
+    const order = await this.orderRepository.getOrderById(orderId);
     return order;
   }
   //   async orderPending(order: Order, driver: User, price: BigInteger) {
@@ -100,7 +87,7 @@ export class Orders {
   async orderAccepted(offer: Offer, token: string) {
     //the customer accepted the driver
     const driverAcceptedByCustomer =
-      await this.orderRepository.customerAcceptedDriver(offer, token);
+      await this.orderRepository.customerAcceptedDriver(offer);
 
     //   //start the trip
     // const startTrip = await this.orderRepository.startTrip(driver, order);

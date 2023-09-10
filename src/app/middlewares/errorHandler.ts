@@ -1,12 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { getStatusCodeForError } from "../utils/Wrapper";
 
-const ErrorResponse = require("../utils/errorResponse");
-// const config = require('../utils/config.json');
-
-//status codes
-const status = require("../config/status.json");
-
 export const GlobalErrorHandler = (
   error: any,
   request: Request,

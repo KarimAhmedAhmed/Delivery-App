@@ -1,11 +1,9 @@
-import UserModel from "../models/user.model";
-import { UserRepository } from "../../../../domain/repositories/User";
-import { User } from "../../../../domain/entities/User";
-import { userRole } from "../dtos/UserDTO";
-import {
-  coordinates,
-  location,
-} from "../../../../../../../src/app/utils/Middlewares";
+import { coordinates } from "../../../app/utils/Middlewares";
+import { User } from "../../domain/entities/User";
+import { UserRepository } from "../../domain/repositories/User";
+import { userRole } from "../../domain/types/userRole";
+import UserModel from "../data-access/models/user.model";
+import { location } from "../../domain/types/location";
 
 export class UserRepositoryMongo extends UserRepository {
   private readonly userModel = UserModel;

@@ -1,4 +1,4 @@
-import { offerStatus } from "../../implementation/data-access/dtos/OfferDTO";
+import { offerStatus } from "../types/offerStatus";
 import { Order } from "./Order";
 import { User } from "./User";
 

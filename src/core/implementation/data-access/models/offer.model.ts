@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { offerStatus } from "../dtos/OfferDTO";
-import { Offer } from "../../../../domain/entities/Offer";
+import { Offer } from "../../../domain/entities/Offer";
 
 const OfferSchema = new Schema<Offer>({
   order: { type: String, required: true },

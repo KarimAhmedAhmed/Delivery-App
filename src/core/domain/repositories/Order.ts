@@ -1,6 +1,5 @@
-import { User } from "../entities/User";
 import { Order } from "../entities/Order";
-import { location } from "../../../../../src/app/utils/Middlewares";
+import { location } from "../types/location";
 import { Offer } from "../entities/Offer";
 
 export abstract class OrderRepository {
@@ -12,13 +11,9 @@ export abstract class OrderRepository {
     dropDownPoint: location,
     token: string
   ): Promise<void>;
-  abstract updateOrder(
-    orderId: string,
-    obj: object,
-    token: string
-  ): Promise<boolean>;
-  abstract customerAcceptedDriver(offer: Offer, token: string): Promise<void>;
-  abstract getOrderById(orderId: string, token: string): Promise<Order>;
+  abstract updateOrder(orderId: string, obj: object): Promise<boolean>;
+  abstract customerAcceptedDriver(offer: Offer): Promise<void>;
+  abstract getOrderById(orderId: string): Promise<Order>;
   // abstract driverAcceptedAnOrder(driver: User, order: Order): Promise<boolean>;
   //   abstract raisePriceByDriver(
   //     driver: User,

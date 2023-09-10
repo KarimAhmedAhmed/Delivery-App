@@ -1,5 +1,4 @@
-import { userRole } from "../../app/infrastructure/data-access/dtos/UserDTO";
-import { User } from "../entities/User";
+import { userRole } from "../types/userRole";
 
 export abstract class TokenService {
   abstract createAccessToken(

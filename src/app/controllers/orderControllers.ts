@@ -1,24 +1,15 @@
-// controllers/orderController.ts
 import { Request, Response } from "express";
-import { Orders } from "../../../core/src/common/domain/useCases/Orders";
-import { OrderRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/OrderRepository";
 import { wrapper } from "../utils/Wrapper";
-import { UserRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/UserRepository";
-import { OfferRepository } from "../../../core/src/common/domain/repositories/Offer";
-import { OfferRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/OfferRepository";
-import { tokenServiceMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/TokenRepositoryMongo";
+import { OrderRepositoryMongo } from "../../core/implementation/repositories/OrderRepository";
+import { UserRepositoryMongo } from "../../core/implementation/repositories/UserRepository";
+import { OfferRepositoryMongo } from "../../core/implementation/repositories/OfferRepository";
+import { Orders } from "../../core/domain/useCases/Orders";
 
 let orderRepository = new OrderRepositoryMongo();
 let userRepository = new UserRepositoryMongo();
 let offerRepository = new OfferRepositoryMongo();
-let tokenService = new tokenServiceMongo();
 
-let orders = new Orders(
-  userRepository,
-  orderRepository,
-  offerRepository,
-  tokenService
-);
+let orders = new Orders(userRepository, orderRepository, offerRepository);
 
 export const createOrder = wrapper(async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -37,21 +28,14 @@ export const createOrder = wrapper(async (req: Request, res: Response) => {
 });
 
 export const updateOrder = wrapper(async (req: Request, res: Response) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) throw new Error("Unauthorized");
   const { orderId, obj } = req.body;
-  const updatedOrder = await orders.updateOrder(orderId, obj, token);
+  const updatedOrder = await orders.updateOrder(orderId, obj);
   res.status(201).json(updatedOrder);
 });
 
 export const getOrderById = wrapper(async (req: Request, res: Response) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) throw new Error("Unauthorized");
-  //  {
-  //   return res.status(401).json({ message: 'Unauthorized' });
-  // }
   const { orderId } = req.params;
-  const order = await orders.getOrderById(orderId, token);
+  const order = await orders.getOrderById(orderId);
   res.status(201).json(order);
 });
 

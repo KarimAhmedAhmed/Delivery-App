@@ -1,5 +1,5 @@
-import { userRole } from "../../app/infrastructure/data-access/dtos/UserDTO";
-import { location } from "../../../../../src/app/utils/Middlewares";
+import { location } from "../types/location";
+import { userRole } from "../types/userRole";
 
 export class User {
   constructor(

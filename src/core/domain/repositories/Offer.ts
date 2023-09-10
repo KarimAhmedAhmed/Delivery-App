@@ -1,7 +1,7 @@
-import { offerStatus } from "../../app/infrastructure/data-access/dtos/OfferDTO";
 import { Offer } from "../entities/Offer";
 import { Order } from "../entities/Order";
 import { User } from "../entities/User";
+import { offerStatus } from "../types/offerStatus";
 
 export abstract class OfferRepository {
   abstract createOffer(

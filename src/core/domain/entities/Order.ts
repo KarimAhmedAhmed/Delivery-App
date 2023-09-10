@@ -1,7 +1,5 @@
-import { orderStatus } from "../../app/infrastructure/data-access/dtos/OrderDTO";
-import { location } from "../../../../../src/app/utils/Middlewares";
-import { Offer } from "./Offer";
-import { User } from "./User";
+import { location } from "../types/location";
+import { orderStatus } from "../types/orderStatus";
 
 export class Order {
   constructor(

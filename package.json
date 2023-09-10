@@ -4,7 +4,7 @@
   "description": "",
   "main": "./core/src/common/app.ts",
   "scripts": {
-    "start": "ts-node ./core/src/common/app.ts",
+    "start": "ts-node ./src/app.ts",
     "test": "jest --maxWorkers=50%",
     "test:cov": "jest --coverage --maxWorkers=50%"
   },

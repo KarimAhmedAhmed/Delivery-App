@@ -1,4 +1,5 @@
-import { location } from "../../../../../../../src/app/utils/Middlewares";
+import { location } from "../../../domain/types/location";
+import { orderStatus } from "../../../domain/types/orderStatus";
 
 export interface Order {
   customerId: string;
@@ -8,5 +9,3 @@ export interface Order {
   deliveryLocation: location;
   status: orderStatus;
 }
-
-export type orderStatus = "Pending" | "Delivered" | "Cancelled" | "On-The-Way";

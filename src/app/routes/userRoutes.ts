@@ -10,12 +10,11 @@ import {
 import { ensureAuth } from "../middlewares/auth";
 const router = express.Router();
 
-router.post("/register/:role", ensureAuth, register);
 router.post("/register/:role", register);
 router.post("/verify/", verifyUser);
 router.post("/login/", login);
-router.get("/:userId", getUserById);
-router.get("/:role", getUsersByRole);
-router.patch("/:userId", getUserByIdAndUpdate);
+router.get("/:userId", ensureAuth, getUserById);
+router.get("/:role", ensureAuth, getUsersByRole);
+router.patch("/:userId", ensureAuth, getUserByIdAndUpdate);
 
 export const UserRouter = router;

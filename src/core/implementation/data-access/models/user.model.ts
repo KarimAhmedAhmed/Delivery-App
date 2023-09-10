@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
-import { userRole } from "../dtos/UserDTO";
-import { location } from "../../../../../../../src/app/utils/Middlewares";
+import { userRole } from "../../../domain/types/userRole";
+import { location } from "../../../domain/types/location";
 
 interface IUser extends Document {
   phoneNumber: string;

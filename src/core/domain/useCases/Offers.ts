@@ -1,6 +1,4 @@
 import { Order } from "../entities/Order";
-import { UserRepository } from "../repositories/User";
-import { OrderRepository } from "../repositories/Order";
 import { User } from "../entities/User";
 import { OfferRepository } from "../repositories/Offer";
 import { Offer } from "../entities/Offer";

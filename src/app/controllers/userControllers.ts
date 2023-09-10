@@ -1,17 +1,13 @@
-// controllers/orderController.ts
 import { Request, Response } from "express";
-import { Auth } from "../../../core/src/common/domain/useCases/User";
-import { UserRepositoryMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/UserRepository";
-import { userRole } from "../../../core/src/common/app/infrastructure/data-access/dtos/UserDTO";
 import { wrapper } from "../utils/Wrapper";
 import { isPhoneNumber } from "class-validator";
-import { tokenServiceMongo } from "../../../core/src/common/app/infrastructure/data-access/repositories/TokenRepositoryMongo";
-import jwt from "jsonwebtoken";
+import { UserRepositoryMongo } from "../../core/implementation/repositories/UserRepository";
+import { Auth } from "../../core/domain/useCases/User";
+import { userRole } from "../../core/domain/types/userRole";
 
 let userRepository = new UserRepositoryMongo();
-let tokenService = new tokenServiceMongo();
 
-let auth = new Auth(userRepository, tokenService);
+let auth = new Auth(userRepository);
 
 export const register = wrapper(async (req: Request, res: Response) => {
   const { role } = req.params;
@@ -38,31 +34,22 @@ export const login = wrapper(async (req: Request, res: Response) => {
 });
 
 export const getUserById = wrapper(async (req: Request, res: Response) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) throw new Error("Unauthorized");
-  //  {
-  //   return res.status(401).json({ message: 'Unauthorized' });
-  // }
   const { userId } = req.params;
-  const user = await auth.findUserByID(userId, token);
+  const user = await auth.findUserByID(userId);
   res.status(201).json(user);
 });
 
 export const getUserByIdAndUpdate = wrapper(
   async (req: Request, res: Response) => {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) throw new Error("Unauthorized");
     const { userId } = req.params;
     const { obj } = req.body;
-    const user = await auth.getUserByIdAndUpdate(userId, obj, token);
+    const user = await auth.getUserByIdAndUpdate(userId, obj);
     res.status(201).json(user);
   }
 );
 
 export const getUsersByRole = wrapper(async (req: Request, res: Response) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) throw new Error("Unauthorized");
   const { role } = req.params;
-  const users = await auth.getUsersRole(role as userRole, token);
+  const users = await auth.getUsersRole(role as userRole);
   res.status(201).json(users);
 });

@@ -1,13 +1,11 @@
-import { Model } from "mongoose";
-import OrderModel from "../models/order.model";
-import { OrderRepository } from "../../../../domain/repositories/Order";
-import { User } from "../../../../domain/entities/User";
-import { Order } from "../../../../domain/entities/Order";
-import UserRepository from "./UserRepository";
-import { location } from "../../../../../../../src/app/utils/Middlewares";
-import OfferModel from "../models/offer.model";
+import { OrderRepository } from "../../domain/repositories/Order";
+import OfferModel from "../data-access/models/offer.model";
+import OrderModel from "../data-access/models/order.model";
 import { OfferRepositoryMongo } from "./OfferRepository";
-import { Offer } from "../../../../domain/entities/Offer";
+import { location } from "../../domain/types/location";
+import { Order } from "../../domain/entities/Order";
+import { Offer } from "../../domain/entities/Offer";
+
 export class OrderRepositoryMongo extends OrderRepository {
   private readonly orderModel = OrderModel;
   private readonly offerModel = OfferModel;

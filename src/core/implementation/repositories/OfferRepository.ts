@@ -1,9 +1,9 @@
-import OfferModel from "../models/offer.model";
-import { Offer } from "../../../../domain/entities/Offer";
-import { offerStatus } from "../dtos/OfferDTO";
-import { OfferRepository } from "../../../../domain/repositories/Offer";
-import { Order } from "../../../../domain/entities/Order";
-import { User } from "../../../../domain/entities/User";
+import { Offer } from "../../domain/entities/Offer";
+import { Order } from "../../domain/entities/Order";
+import { User } from "../../domain/entities/User";
+import { OfferRepository } from "../../domain/repositories/Offer";
+import { offerStatus } from "../../domain/types/offerStatus";
+import OfferModel from "../data-access/models/offer.model";
 
 export class OfferRepositoryMongo extends OfferRepository {
   private readonly offerModel = OfferModel;

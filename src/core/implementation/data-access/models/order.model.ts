@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { orderStatus } from "../dtos/OrderDTO";
-import { location } from "../../../../../../../src/app/utils/Middlewares";
-import { Order } from "../../../../domain/entities/Order";
+import { location } from "../../../domain/types/location";
+import { orderStatus } from "../../../domain/types/orderStatus";
+import { Order } from "../../../domain/entities/Order";
 
 export interface IOrder extends Document {
   customerId: string;

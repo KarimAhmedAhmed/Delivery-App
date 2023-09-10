@@ -1,6 +1,6 @@
-import { userRole } from "../../app/infrastructure/data-access/dtos/UserDTO";
-import { location } from "../../../../../src/app/utils/Middlewares";
 import { User } from "../entities/User";
+import { userRole } from "../types/userRole";
+import { location } from "../types/location";
 
 export abstract class UserRepository {
   abstract createUser(phoneNumber: String, role: userRole): Promise<void>;

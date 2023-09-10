@@ -1,4 +1,5 @@
-import { location } from "../../../../../../../src/app/utils/Middlewares";
+import { location } from "../../../domain/types/location";
+import { userRole } from "../../../domain/types/userRole";
 
 export interface User {
   phoneNumber: string;
@@ -6,4 +7,3 @@ export interface User {
   role: userRole;
   liveLocation?: location;
 }
-export type userRole = "Admin" | "Customer" | "Driver";
