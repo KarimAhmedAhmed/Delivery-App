@@ -44,13 +44,11 @@ export class OrderRepositoryMongo extends OrderRepository {
   }
 
   async customerAcceptedDriver(offer: Offer) {
-    const filterOffer = await this.offerModel
-      .findOne(offer)
-      .select("driver, raised");
+    const filterOffer = await this.offerModel.findOne(offer).select("driver");
 
     const order = await this.orderModel.findOneAndUpdate(offer.order, {
       status: "On-The-Way",
-      offer: offer,
+      offer: filterOffer,
     });
   }
 }

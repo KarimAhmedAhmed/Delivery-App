@@ -12,31 +12,35 @@ export class MemoryCache {
   private cacheToken: Record<string, TokenEntry> = {};
 
   // Function to store OTP and its expiry timestamp
-  storeOTP(phoneNumber: string, otp: string, expiryTimestamp: number): void {
+  async storeOTP(
+    phoneNumber: string,
+    otp: string,
+    expiryTimestamp: number
+  ): Promise<void> {
     this.cacheOTP[phoneNumber] = { otp, expiryTimestamp };
   }
 
   // Function to retrieve stored OTP entry
-  getOTPEntry(phoneNumber: string): OTPEntry | undefined {
+  async getOTPEntry(phoneNumber: string): Promise<OTPEntry> {
     return this.cacheOTP[phoneNumber];
   }
 
   // Function to delete OTP entry
-  deleteOTPEntry(phoneNumber: string): void {
+  async deleteOTPEntry(phoneNumber: string): Promise<void> {
     delete this.cacheOTP[phoneNumber];
   }
 
-  storeToken(phoneNumber: string, accessToken: string): void {
+  async storeToken(phoneNumber: string, accessToken: string): Promise<void> {
     this.cacheToken[phoneNumber] = { accessToken };
   }
 
   // Function to retrieve stored OTP entry
-  getTokenEntry(accessToken: string): TokenEntry | undefined {
-    return this.cacheToken[accessToken];
+  async getTokenEntry(phoneNumber: string): Promise<TokenEntry> {
+    return this.cacheToken[phoneNumber];
   }
 
   // Function to delete OTP entry
-  deleteTokenEntry(phoneNumber: string): void {
+  async deleteTokenEntry(phoneNumber: string): Promise<void> {
     delete this.cacheOTP[phoneNumber];
   }
 }

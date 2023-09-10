@@ -1,16 +1,5 @@
-import mongoose, { Schema, Document, Types, ObjectId } from "mongoose";
-import { location } from "../../../domain/types/location";
-import { orderStatus } from "../../../domain/types/orderStatus";
+import mongoose, { Schema } from "mongoose";
 import { Order } from "../../../domain/entities/Order";
-
-export interface IOrder extends Document {
-  customerId: string;
-  items: string[];
-  price: number;
-  pickupPoint: location;
-  deliveryLocation: location;
-  status: orderStatus;
-}
 
 const OrderSchema = new Schema<Order>({
   customerId: String,

@@ -6,8 +6,8 @@ export class User {
   constructor(
     readonly phoneNumber: string,
     readonly role: userRole,
+    readonly isVerified: boolean,
     readonly password?: string,
-    readonly liveLoction?: location,
-    readonly isVerified?: boolean
+    readonly liveLoction?: location
   ) {}
 }

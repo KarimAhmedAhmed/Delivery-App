@@ -20,8 +20,8 @@ export const register = wrapper(async (req: Request, res: Response) => {
 });
 
 export const verifyUser = wrapper(async (req: Request, res: Response) => {
-  const { otp } = req.body;
-  const verifyUser = await auth.verifyUser(otp);
+  const { phoneNumber, otp } = req.body;
+  const verifyUser = await auth.verifyUser(phoneNumber, otp);
   res.status(201).json(verifyUser);
 });
 

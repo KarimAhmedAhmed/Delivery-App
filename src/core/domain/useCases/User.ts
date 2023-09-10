@@ -1,4 +1,5 @@
 import { createAccessToken } from "../../implementation/service/JWTTokenService";
+import { PermissionError } from "../../utils/Errors";
 import { User } from "../entities/User";
 import { UserRepository } from "../repositories/User";
 import { userRole } from "../types/userRole";
@@ -9,16 +10,16 @@ export class Auth {
   async register(phoneNumber: string, role: userRole) {
     const user = await this.userRepository.getUserByPhoneNumber(phoneNumber);
     if (user) throw new Error(`This phonenumber is already used`);
-    new User(phoneNumber, role);
+    new User(phoneNumber, role, false);
     const userCreated = await this.userRepository.createUser(phoneNumber, role);
     const accessToken = createAccessToken(phoneNumber, role);
 
-    return { userCreated: userCreated, accessToken: accessToken };
+    return { userCreated: userCreated };
   }
 
-  async verifyUser(otp: number) {
-    const sentOTP = 123456;
-    if (otp != sentOTP) throw new Error("Wrong OTP");
+  async verifyUser(phoneNumber: string, otp: string) {
+    const check = await this.userRepository.verifyUser(phoneNumber, otp);
+    if (!check) throw new PermissionError("Wrong OTP");
     return true;
   }
 

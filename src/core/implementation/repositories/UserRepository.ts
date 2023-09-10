@@ -4,19 +4,29 @@ import { UserRepository } from "../../domain/repositories/User";
 import { userRole } from "../../domain/types/userRole";
 import UserModel from "../data-access/models/user.model";
 import { location } from "../../domain/types/location";
+import { MemoryCache } from "./MemoryCacheRepository";
+import { OTPGenerator } from "../service/JWTTokenService";
+import { PermissionError } from "../../utils/Errors";
 
+let memoryCache = new MemoryCache();
 export class UserRepositoryMongo extends UserRepository {
   private readonly userModel = UserModel;
 
   async createUser(phoneNumber: string, role: userRole) {
-    const user = new User(phoneNumber, role);
+    const user = new User(phoneNumber, role, false);
+    const otp = OTPGenerator(6);
+    const currentTimeInSeconds = Math.floor(Date.now() / 1000); // Convert milliseconds to seconds.
+    const expiryTimestamp = currentTimeInSeconds + 1800;
+    await memoryCache.storeOTP(phoneNumber, otp, expiryTimestamp);
     const newUser = new this.userModel(user);
     await newUser.save();
+    return otp;
   }
 
-  async verifyUser(otp: number) {
-    const sentOTP = 123456;
-    if (otp != sentOTP) throw new Error("Wrong OTP");
+  async verifyUser(phoneNumber: string, otp: string) {
+    const storedOTP = await memoryCache.getOTPEntry(phoneNumber);
+    if (otp != storedOTP.otp) throw new PermissionError("Wrong OTP");
+    await this.getUserByPhoneNumberAndUpdate(phoneNumber, { isVerified: true });
     return true;
   }
 

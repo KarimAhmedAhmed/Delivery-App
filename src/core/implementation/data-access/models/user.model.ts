@@ -7,6 +7,7 @@ interface IUser extends Document {
   password?: string;
   role: userRole;
   liveLocation?: location;
+  isVerified: boolean;
 }
 
 const userSchema = new Schema<IUser>({

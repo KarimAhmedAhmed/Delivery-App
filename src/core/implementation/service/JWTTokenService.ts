@@ -12,38 +12,39 @@ dotenv.config();
 
 let memoryCache = new MemoryCache();
 
-export function createAccessToken(phoneNumber: string, role: userRole) {
+export async function createAccessToken(phoneNumber: string, role: userRole) {
   let secretKey = process.env.SECRET_KEY;
   const payload = { phoneNumber, role };
-  const token = jwt.sign(payload, "12345", { expiresIn: "1h" }); // Token expires in 1 hour
+  const token = jwt.sign(payload, "12345", { expiresIn: "24h" }); // Token expires in 24 hours
+  await memoryCache.storeToken(phoneNumber, token);
 
   return token;
 }
 
 export async function checkAuthToken(token: string) {
+  console.log("us", token);
   let user;
   function authenticateToken(
     req: Request,
     res: Response,
     next: NextFunction
   ): void {
-    jwt.verify(token, "123", (err, user) => {
+    jwt.verify(token, "12345", async (err, user) => {
       if (err) {
         throw new PermissionError("Forbidden");
       }
-
-      user = user;
+      console.log(user);
     });
   }
-
   return user;
 }
 
 export function OTPGenerator(numbers: number): string {
   const otp = otpGenerator.generate(numbers, {
     digits: true,
-    specialChars: true,
-    lowerCaseAlphabets: true,
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
   });
 
   return otp;

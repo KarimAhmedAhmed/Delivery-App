@@ -3,8 +3,8 @@ import { userRole } from "../types/userRole";
 import { location } from "../types/location";
 
 export abstract class UserRepository {
-  abstract createUser(phoneNumber: String, role: userRole): Promise<void>;
-  abstract verifyUser(otp: number): Promise<boolean>;
+  abstract createUser(phoneNumber: String, role: userRole): Promise<string>;
+  abstract verifyUser(phoneNumber: string, otp: string): Promise<boolean>;
   abstract getUserByPhoneNumber(phoneNumber: string): Promise<User>;
   // abstract setLocation(
   //   userId: string,
