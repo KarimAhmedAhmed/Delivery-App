@@ -5,7 +5,7 @@ import { location } from "../types/location";
 export abstract class UserRepository {
   abstract createUser(phoneNumber: String, role: userRole): Promise<string>;
   abstract verifyUser(phoneNumber: string, otp: string): Promise<boolean>;
-  abstract getUserByPhoneNumber(phoneNumber: string): Promise<User>;
+  abstract getUserByPhoneNumber(phoneNumber: string): Promise<User|null>;
   // abstract setLocation(
   //   userId: string,
   //   liveLocation: location
