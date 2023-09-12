@@ -12,7 +12,6 @@ Before getting started with the project, users should have the following prerequ
 
 - Node.js and npm (Node Package Manager)
 - MongoDB (for data storage)
-- Other dependencies (specified in the project's documentation)
 
 ## Getting Started
 
